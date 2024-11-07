@@ -5,6 +5,7 @@
     <title>QuaggaJS Example</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
+    <script src="script.js"></script>
   </head>
   <body>
     <div class="main-container">
@@ -12,7 +13,6 @@
         <div class="wrapper">
           <div id="container"><!-- ここにカメラ映像を挿入 --></div>
         </div>
-        <input type="hidden" name="isbn" id="isbn" value="123457789564" />
         <script>
           // Quaggaの初期化
           window.onload = function () {
@@ -50,27 +50,10 @@
       </section>
       <section>
         <div class="receipt">
-          <div class="receipt-items">
-            <div class="item">
-              <span class="item-details">商品A</span>
-              <span class="item-quantity">2</span>
-              <span class="item-price">1000</span>
-            </div>
-            <div class="item">
-              <span class="item-details">商品B</span>
-              <span class="item-quantity">1</span>
-              <span class="item-price">1200</span>
-            </div>
-            <div class="item">
-              <span class="item-details">商品C</span>
-              <span class="item-quantity">3</span>
-              <span class="item-price">2400</span>
-            </div>
-          </div>
-
+          <div class="receipt-items" id="ReceiptItems"></div>
           <div class="total">
             <span>合計</span>
-            <span class="total-price">4600</span>
+            <span class="total-price" id="TotalPrice">0</span>
           </div>
         </div>
       </section>

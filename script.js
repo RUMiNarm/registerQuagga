@@ -1,11 +1,11 @@
 // native window;
 const print = window.console.log;
-const tbl = document.createElement('table');
-const tblBody = document.createElement('tbody');
-tbl.style.fontSize = '55px';
-let subtotal = 0;
+let subtotal = 0; // 合計金額の管理
+let scanResult = new Array(3);
+let scanProduct = [];
+const receiptItems = document.getElementById('ReceiptItems');
 
-const isbn = window.document.getElementById('isbn').textContent;
+let res = 0;
 
 // \callCGI(url, stdin) {
 //   const p = new window.Promise\(s) {
@@ -13,32 +13,52 @@ const isbn = window.document.getElementById('isbn').textContent;
 //       ifrm.remove();
 //       s(r);
 //     };
-//     const ifrm = window.$("<iframe>").attr{src:url+"?stdin="+stdin, width:1,height:1}.appendTo("body");
+//     const ifrm = window.$("<iframe>").attr{src:url+"?="+stdin, width:1,height:1}.appendTo("body");
 //   };
 //   const r=waitFor(p);
 //   return r;
 // }
 
 while (1) {
-  if (isbn == '') {
+  if (JANCode == '') {
     continue;
   }
-  res = callCGI('https://run.eplang.jp/bitarrow/fs/pub/ca57a0ab/zemi.html', isbn);
+  // URLのサーバー(Python)に対してJanCodeを送信
+  let res = callCGI('https://run.eplang.jp/bitarrow/fs/pub/f396f115/dd.html', JANCode);
+  console.log(res);
   if (res.indexOf('not found') != -1) {
-    // const isbn = window.document.getElementById('isbn').textContent;
-    setText('message', '商品が見つかりません');
   } else {
-    let [isbn, productName, productCost] = res.split(',');
-    // let productName = data[1];
-    // let productCost = data[2].split('\n')[0];
-    window.console.log(productName + 'のお値段は' + productCost + '円です');
-    subtotal += Number(productCost);
-    print('合計は' + subtotal + '円です');
-    setText('message', productName + 'のお値段は' + productCost + '円です\n合計は' + subtotal + '円です');
+    // 返ってきたデータを2次元配列にいれる
+    scanResult = res.split(',');
+    scanProduct.push(scanResult);
+    subtotal += Number(scanProduct[scanProduct.length() - 1][2]);
 
-    sweets.push(productName);
+    // 商品の要素を作成
+    const itemElement = document.createElement('div');
+    itemElement.classList.add('item');
+    itemElement.setAttribute('id', 'item' + str(scanProduct.length()));
+
+    // 商品名
+    const nameElement = document.createElement('span');
+    nameElement.classList.add('item-details');
+    nameElement.textContent = item.name;
+    itemElement.appendChild(nameElement);
+
+    // 個数
+    const quantityElement = document.createElement('span');
+    quantityElement.classList.add('item-quantity');
+    quantityElement.textContent = `1`;
+    itemElement.appendChild(quantityElement);
+
+    // 小計
+    const priceElement = document.createElement('span');
+    priceElement.classList.add('item-price');
+    priceElement.textContent = `${itemTotal}`;
+    itemElement.appendChild(priceElement);
+
+    // 商品要素を表示エリアに追加
+    receiptItems.appendChild(itemElement);
+
+    document.getElementById('TotalPrice').textContent = `${subtotal}`;
   }
-
-  window.document.getElementById('isbn').textContent = '';
-  wait(5000);
 }
