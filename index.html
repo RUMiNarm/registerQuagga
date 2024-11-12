@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>QuaggaJS Example</title>
-    <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
-    <script src="script.js"></script>
+    <script src="//unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
     <style>
       .wrapper {
         display: flex;
@@ -42,6 +41,9 @@
 
       video {
         transform: scaleX(-1);
+      }
+
+      canvas {
       }
 
       .receipt {
@@ -112,6 +114,7 @@
             Quagga.init(
               {
                 inputStream: {
+                  name: 'Live',
                   type: 'LiveStream',
                   target: document.getElementById('container')
                 },
@@ -139,7 +142,6 @@
             });
             Quagga.onDetected((result) => {
               document.getElementById('result').textContent = result.codeResult.code;
-              document.getElementById('JANCode').textContent = result.codeResult.code;
             });
           };
         </script>
